@@ -7,9 +7,11 @@
     "require": {
         "php": "^8.2",
         "afatmustafa/blade-hugeicons": "^0.0.3",
+        "andreiio/blade-remix-icon": "^3.5",
         "blade-ui-kit/blade-ui-kit": "^0.6.4",
         "blade-ui-kit/blade-zondicons": "^1.5",
         "codeat3/blade-vaadin-icons": "^1.5",
+        "davidhsianturi/blade-bootstrap-icons": "^1.5",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9"
     },

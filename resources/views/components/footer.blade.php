@@ -1,9 +1,13 @@
+<a href="https://wa.me/628938383838?text=Selamat siang admin, saya ingin bertanya mengenai RS DR EUIS"
+    class=" right-1 bottom-28 w-16 h-16 rounded-full z-40 fixed">
+    <x-ri-whatsapp-fill class="text-green-400" />
+</a>
 <footer class="items-center justify-center text-center w-full md:flex hidden h-12 bottom-0 absolute bg-custom-blue">
     <p class="text-base font-bold text-white">Copyright © 2023 RS DR EUIS. | All Rights Reserved</p>
 </footer>
 
-<footer class="items-center justify-center text-center w-full md:hidden flex flex-col h-24 bottom-0 absolute">
-    <div class="flex flex-row w-full h-24 border-slate-400 rounded-t-3xl bg-white border  shadow-xl absolute bottom-0">
+<footer class="items-center justify-center text-center w-full md:hidden flex flex-col h-24 fixed bottom-0">
+    <div class="flex flex-row w-full h-full border-slate-400 rounded-t-3xl bg-white border shadow-xl">
         <!-- Konten 1 -->
         <div class="flex flex-col items-center justify-center w-1/3">
             <a href="#" class="text-center items-center flex flex-col">

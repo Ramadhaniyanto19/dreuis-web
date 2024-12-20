@@ -10,9 +10,9 @@
 </head>
 
 <body>
-    <div class="w-full h-full flex flex-col flex-1">
+    <div class="w-full h-full flex flex-col relative">
         <x-navbar></x-navbar>
-        <main class="flex flex-col p-4 w-full h-full">
+        <main class="flex flex-col w-full h-full">
             {{ $slot }}
         </main>
         <x-footer></x-footer>

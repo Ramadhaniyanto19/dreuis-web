@@ -12,6 +12,9 @@ export default {
                 "custom-blue": "#0B4D8C",
                 "custom-green": "#A8D36A",
             },
+            backgroundImage: {
+                "custom-bg": "url('/assets/img1.jpg')",
+            },
         },
     },
     plugins: [require("flowbite/plugin")],
