@@ -101,25 +101,17 @@
                                 </svg>
                             </button>
                             <div id="layananKesehatan"
-                                class="z-10 hidden bg-custom-green text-white divide-y divide-gray-100 rounded-lg shadow md:w-[39%] w-[80%] dark:bg-custom-blue h-32 overflow-y-scroll">
+                                class="z-10 hidden bg-custom-green text-white divide-y divide-gray-100 rounded-lg shadow md:w-[41%] w-[80%] dark:bg-custom-blue h-32 overflow-y-scroll">
                                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
                                     aria-labelledby="dropdownDelayButton">
-                                    <li>
-                                        <a href="#"
-                                            class="block text-white px-4 py-2 hover:bg-custom-blue">Dashboard</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            class="block px-4 py-2 hover:bg-custom-blue text-white">Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            class="block px-4 py-2 hover:bg-custom-blue text-white">Earnings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="block px-4 py-2 hover:bg-custom-blue text-white">Sign
-                                            out</a>
-                                    </li>
+                                    @foreach ($jadwalDokter as $jadwal)
+                                        <li>
+                                            <p class="block text-white px-4 py-2 hover:bg-custom-blue"
+                                                onclick="setSelectedSpecialist('{{ $jadwal['spesialis'] }}')">
+                                                Spesialis {{ $jadwal['spesialis'] }}
+                                            </p>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -127,47 +119,38 @@
                         {{-- Pilih Hari --}}
                         <div class="flex flex-col gap-y-2">
                             <p class="text-slate-700 text-base">Pilih hari</p>
-                            <button id="dropdownDelayButton" data-dropdown-toggle="pilihHari"
-                                data-dropdown-delay="500" data-dropdown-trigger="hover"
+                            <button id="pilihhari" data-dropdown-toggle="pilihHari" data-dropdown-delay="500"
+                                data-dropdown-trigger="hover"
                                 class="text-slate-600 w-[94%] bg-white border border-gray-300 hover:bg-custom-green focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg hover:text-white text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 relative"
-                                type="button">Pilih Hari<svg class="w-2.5 h-2.5 absolute right-2 "
-                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 10 6">
+                                type="button">Pilih Hari<svg class="w-2.5 h-2.5 absolute right-2 " aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2" d="m1 1 4 4 4-4" />
                                 </svg>
                             </button>
                             <div id="pilihHari"
-                                class="z-10 hidden bg-custom-green text-white divide-y divide-gray-100 rounded-lg shadow md:w-[39%] w-[80%] dark:bg-custom-blue h-32 overflow-y-scroll">
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                    aria-labelledby="dropdownDelayButton">
-                                    <li>
-                                        <a href="#"
-                                            class="block text-white px-4 py-2 hover:bg-custom-blue">Hari</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            class="block px-4 py-2 hover:bg-custom-blue text-white">Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            class="block px-4 py-2 hover:bg-custom-blue text-white">Earnings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="block px-4 py-2 hover:bg-custom-blue text-white">Sign
-                                            out</a>
-                                    </li>
+                                class="z-10 hidden bg-custom-green text-white divide-y divide-gray-100 rounded-lg shadow md:w-[41%] w-[80%] dark:bg-custom-blue h-32 overflow-y-scroll">
+                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="pilihhari">
+                                    @php
+                                        $days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+                                    @endphp
+                                    @foreach ($days as $day)
+                                        <li>
+                                            <p class="block text-white px-4 py-2 hover:bg-custom-blue"
+                                                id="selectedDay" onclick="setSelectedDay('{{ $day }}')">
+                                                {{ $day }}</p>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
 
                         {{-- Pilih Dokter --}}
-                        <div class="flex flex-col gap-y-2 w-full">
+                        <div class="flex flex-col gap-y-2 w-full mt-4">
                             <p class="text-slate-700 text-base">Pilih Dokter</p>
-                            <button id="dropdownDelayButton" data-dropdown-toggle="pilihDokter"
-                                data-dropdown-delay="500" data-dropdown-trigger="hover"
+                            <button id="dropdownDokterButton" data-dropdown-toggle="pilihDokter"
                                 class="text-slate-600 w-[94%] bg-white border border-gray-300 hover:bg-custom-green focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg hover:text-white text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 relative"
-                                type="button">Pilih Hari<svg class="w-2.5 h-2.5 absolute right-2 "
+                                type="button">Pilih Dokter<svg class="w-2.5 h-2.5 absolute right-2"
                                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -175,28 +158,14 @@
                                 </svg>
                             </button>
                             <div id="pilihDokter"
-                                class="z-10 hidden bg-custom-green text-white divide-y divide-gray-100 rounded-lg shadow md:w-[39%] w-[80%] dark:bg-custom-blue h-32 overflow-y-scroll">
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                    aria-labelledby="dropdownDelayButton">
-                                    <li>
-                                        <a href="#" class="block text-white px-4 py-2 hover:bg-custom-blue">Drs
-                                            Mira</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            class="block px-4 py-2 hover:bg-custom-blue text-white">Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            class="block px-4 py-2 hover:bg-custom-blue text-white">Earnings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="block px-4 py-2 hover:bg-custom-blue text-white">Sign
-                                            out</a>
-                                    </li>
+                                class="z-10 hidden bg-custom-green text-white divide-y divide-gray-100 rounded-lg shadow md:w-[83%] w-[80%] dark:bg-custom-blue h-32 overflow-y-scroll">
+                                <ul id="dokterList" class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                    aria-labelledby="dropdownDokterButton">
+                                    <!-- Dokter akan dimasukkan di sini oleh JavaScript -->
                                 </ul>
                             </div>
                         </div>
+
 
                         <button type="submit"
                             class="bg-custom-blue mt-4 hover:bg-custom-green text-white font-bold w-[94%] h-12 rounded-xl ">
@@ -215,51 +184,28 @@
                     </div>
                     <div class="flex flex-col items-center gap-y-1 pl-14 justify-center w-[50%]">
                         <a href="#"
-                            class="text-center text-custom-green items-center justify-center flex  font-semibold rounded-lg text-sm"
+                            class="text-center text-custom-green items-center justify-center flex font-semibold rounded-lg text-sm"
                             type="button">Lihat Lainnya</a>
                         <div class="w-20 h-0.5 bg-gradient-to-l from-custom-blue to-custom-green"></div>
                     </div>
                 </div>
-                <div class="flex flex-col md:w-60 pb-4 w-[90%] rounded-xl h-60 bg-white shadow-xl border gap-y-1">
-                    <img src="https://img.freepik.com/free-photo/lifestyle-beauty-fashion-people-emotions-concept-young-asian-female-office-manager-ceo-with-pleased-expression-standing-white-background-smiling-with-arms-crossed-chest_1258-59329.jpg?t=st=1733417222~exp=1733420822~hmac=b7bd733c6b0df5fa6c70c98a8556d59ee295840862609b30ac3ba280eda8b4bb&w=996"
-                        class="w-40 h-40 rounded-full mx-auto mt-0.5" alt="" />
-                    <p class="text-center text-custom-green font-semibold">Drs Miranda lestari S.Kep</p>
-                    <p class="text-center text-custom-blue font-semibold">Spesialis Anak</p>
-                    <button
-                        class="text-center bg-custom-green items-center justify-center flex text-white font-semibold px-5 py-2  rounded-lg mx-auto">Lihat
-                        Jadwal</button>
-                </div>
-                <div class="flex flex-col md:w-60 pb-4 w-[90%] rounded-xl h-60 bg-white shadow-xl border gap-y-1">
-                    <img src="https://img.freepik.com/free-photo/lifestyle-beauty-fashion-people-emotions-concept-young-asian-female-office-manager-ceo-with-pleased-expression-standing-white-background-smiling-with-arms-crossed-chest_1258-59329.jpg?t=st=1733417222~exp=1733420822~hmac=b7bd733c6b0df5fa6c70c98a8556d59ee295840862609b30ac3ba280eda8b4bb&w=996"
-                        class="w-40 h-40 rounded-full mx-auto mt-0.5" alt="" />
-                    <p class="text-center text-custom-green font-semibold">Drs Miranda lestari S.Kep</p>
-                    <p class="text-center text-custom-blue font-semibold">Spesialis Anak</p>
-                    <button
-                        class="text-center bg-custom-green items-center justify-center flex text-white font-semibold px-5 py-2  rounded-lg mx-auto">Lihat
-                        Jadwal</button>
-                </div>
-                <div class="flex flex-col md:w-60 pb-4 w-[90%] rounded-xl h-60 bg-white shadow-xl border gap-y-1">
-                    <img src="https://img.freepik.com/free-photo/lifestyle-beauty-fashion-people-emotions-concept-young-asian-female-office-manager-ceo-with-pleased-expression-standing-white-background-smiling-with-arms-crossed-chest_1258-59329.jpg?t=st=1733417222~exp=1733420822~hmac=b7bd733c6b0df5fa6c70c98a8556d59ee295840862609b30ac3ba280eda8b4bb&w=996"
-                        class="w-40 h-40 rounded-full mx-auto mt-0.5" alt="" />
-                    <p class="text-center text-custom-green font-semibold">Drs Miranda lestari S.Kep</p>
-                    <p class="text-center text-custom-blue font-semibold">Spesialis Anak</p>
-                    <button
-                        class="text-center bg-custom-green items-center justify-center flex text-white font-semibold px-5 py-2  rounded-lg mx-auto">Lihat
-                        Jadwal</button>
-                </div>
-                <div class="flex flex-col md:w-60 pb-4 w-[90%] rounded-xl h-60 bg-white shadow-xl border gap-y-1">
-                    <img src="https://img.freepik.com/free-photo/lifestyle-beauty-fashion-people-emotions-concept-young-asian-female-office-manager-ceo-with-pleased-expression-standing-white-background-smiling-with-arms-crossed-chest_1258-59329.jpg?t=st=1733417222~exp=1733420822~hmac=b7bd733c6b0df5fa6c70c98a8556d59ee295840862609b30ac3ba280eda8b4bb&w=996"
-                        class="w-40 h-40 rounded-full mx-auto mt-0.5" alt="" />
-                    <p class="text-center text-custom-green font-semibold">Drs Miranda lestari S.Kep</p>
-                    <p class="text-center text-custom-blue font-semibold">Spesialis Anak</p>
-                    <button
-                        class="text-center bg-custom-green items-center justify-center flex text-white font-semibold px-5 py-2  rounded-lg mx-auto">Lihat
-                        Jadwal</button>
-                </div>
+
+                @foreach ($jadwalDokter as $dokter)
+                    <div class="flex flex-col md:w-60 pb-4 w-[90%] rounded-xl h-60 bg-white shadow-xl border gap-y-1">
+                        <img src="../assets/doctor.jpg" class="w-24 h-24 rounded-full mx-auto mt-0.5"
+                            alt="Foto {{ $dokter['nama'] }}" />
+                        <p class="text-center text-custom-green font-semibold">{{ $dokter['nama'] }}</p>
+                        <p class="text-center text-custom-blue font-semibold">Spesialis {{ $dokter['spesialis'] }}</p>
+                        <a href="/jadwal-dokter"
+                            class="text-center bg-custom-green items-center justify-center flex text-white font-semibold px-5 py-2 rounded-lg mx-auto">Lihat
+                            Jadwal</a>
+                    </div>
+                @endforeach
+
                 {{-- <a href="#"
-                    class="text-center bg-gradient-to-tr md:hidden from-custom-green to-custom-blue items-center justify-center flex text-white font-semibold px-5 py-2  rounded-lg"
-                    type="button">Lihat Dokter
-                    Lainnya</a> --}}
+                class="text-center bg-gradient-to-tr md:hidden from-custom-green to-custom-blue items-center justify-center flex text-white font-semibold px-5 py-2  rounded-lg"
+                type="button">Lihat Dokter
+                Lainnya</a> --}}
             </div>
         </div>
 
@@ -276,7 +222,10 @@
                     <div class="w-20 md:w-60 h-0.5 bg-gradient-to-l from-custom-blue to-custom-green"></div>
                 </div>
             </div>
-            <div class="grid md:grid-cols-3 grid-cols-1 gap-4 w-[90%] h-full items-center justify-center">
+            <div class="flex items-center justify-center text-center py-32">
+                <p class="text-base md:text-xl text-slate-200 font-semibold">Belum ada promo.</p>
+            </div>
+            {{-- <div class="grid md:grid-cols-3 grid-cols-1 gap-4 w-[90%] h-full items-center justify-center">
                 <div class="flex flex-col w-full h-full rounded-xl items-center justify-center bg-white shadow-xl border gap-y-1 cursor-pointer"
                     data-modal-target="static-modal" data-modal-toggle="static-modal">
                     <img src="../assets/img1.jpg" width="100%" height="100%" class="bg-cover rounded-xl"
@@ -292,7 +241,7 @@
                     <img src="../assets/img1.jpg" width="100%" height="100%" class="bg-cover rounded-xl"
                         alt="">
                 </div>
-            </div>
+            </div> --}}
             <a href="#"
                 class="hidden text-center bg-gradient-to-tr from-custom-green to-custom-blue items-center justify-center md:flex text-white font-semibold px-5 py-2  rounded-lg"
                 type="button">Lihat Promo
@@ -341,7 +290,7 @@
 
         <div class="flex flex-col w-full h-auto justify-center items-center gap-y-4">
             <div class="flex md:flex-col justify-between md:justify-center items-center w-full px-8">
-                <h1 class="text-custom-blue md:text-center text-xl font-bold md:text-2xl">Artikel Terkini</h1>
+                <h1 class="text-custom-blue md:text-center text-xl font-bold md:text-2xl">Berita Terkini</h1>
                 <div class="w-44 h-0.5 bg-gradient-to-l from-custom-blue to-custom-green md:block hidden"></div>
                 <div class="flex flex-col md:hidden">
                     <a href="#"
@@ -360,106 +309,17 @@
                         dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
                     <!-- Artikel 1 -->
                     <div class="flex-shrink-0 w-full md:w-[300px] h-auto rounded-xl bg-white shadow-xl border p-4">
-                        <img src="../assets/img1.jpg" alt="Thumbnail Artikel"
+                        <img src="../assets/berita1.jpg" alt="Thumbnail Artikel"
                             class="w-full h-48 object-cover rounded-t-xl mb-4">
-                        <h3 class="text-lg font-semibold text-custom-blue">Judul Artikel Pertama</h3>
+                        <h3 class="text-lg font-semibold text-custom-blue">Pelayanan Kesehatan Adalah Dukungan
+                            Pemeliharaan Kesehatan</h3>
                         <p class="text-sm text-gray-600 mt-2">
-                            Ini adalah ringkasan atau deskripsi singkat dari artikel pertama. Isi artikel memberikan
-                            informasi bermanfaat.
-                        </p>
-                        <div class="flex mt-4">
-                            <a href="#"
-                                class="flex items-center text-custom-green font-semibold hover:underline justify-center gap-x-2">
-                                <span>Baca Selengkapnya</span>
-                                <x-bi-arrow-right-circle-fill />
-                            </a>
-                        </div>
-                    </div>
+                            Pelayanan kesehatan adalah setiap upaya untuk memelihara dan meningkatkan kesehatan serta
+                            mencegah dan menyembuhkan penyakit masyarakat.
 
-                    <!-- Artikel 2 -->
-                    <div class="flex-shrink-0 w-full md:w-[300px] h-auto rounded-xl bg-white shadow-xl border p-4">
-                        <img src="../assets/img2.jpg" alt="Thumbnail Artikel"
-                            class="w-full h-48 object-cover rounded-t-xl mb-4">
-                        <h3 class="text-lg font-semibold text-custom-blue">Judul Artikel Kedua</h3>
-                        <p class="text-sm text-gray-600 mt-2">
-                            Ini adalah ringkasan atau deskripsi singkat dari artikel kedua. Artikel ini memberikan
-                            wawasan
-                            menarik.
                         </p>
                         <div class="flex mt-4">
-                            <a href="#"
-                                class="flex items-center text-custom-green font-semibold hover:underline justify-center gap-x-2">
-                                <span>Baca Selengkapnya</span>
-                                <x-bi-arrow-right-circle-fill />
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Artikel 3 -->
-                    <div class="flex-shrink-0 w-full md:w-[300px] h-auto rounded-xl bg-white shadow-xl border p-4">
-                        <img src="../assets/img1.jpg" alt="Thumbnail Artikel"
-                            class="w-full h-48 object-cover rounded-t-xl mb-4">
-                        <h3 class="text-lg font-semibold text-custom-blue">Judul Artikel Ketiga</h3>
-                        <p class="text-sm text-gray-600 mt-2 text-justify">
-                            Ini adalah ringkasan atau deskripsi singkat dari artikel ketiga. Informasi ini sangat
-                            berguna
-                            untuk pembaca.
-                        </p>
-                        <div class="flex mt-4">
-                            <a href="#"
-                                class="flex items-center text-custom-green font-semibold hover:underline justify-center gap-x-2">
-                                <span>Baca Selengkapnya</span>
-                                <x-bi-arrow-right-circle-fill />
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Artikel 4 -->
-                    <div class="flex-shrink-0 w-full md:w-[300px] h-auto rounded-xl bg-white shadow-xl border p-4">
-                        <img src="../assets/img1.jpg" alt="Thumbnail Artikel"
-                            class="w-full h-48 object-cover rounded-t-xl mb-4">
-                        <h3 class="text-lg font-semibold text-custom-blue">Judul Artikel Keempat</h3>
-                        <p class="text-sm text-gray-600 mt-2 text-justify">
-                            Ini adalah ringkasan atau deskripsi singkat dari artikel keempat. Informasi ini sangat
-                            berguna
-                            untuk pembaca.
-                        </p>
-                        <div class="flex mt-4">
-                            <a href="#"
-                                class="flex items-center text-custom-green font-semibold hover:underline justify-center gap-x-2">
-                                <span>Baca Selengkapnya</span>
-                                <x-bi-arrow-right-circle-fill />
-                            </a>
-                        </div>
-                    </div>
-                    <div class="flex-shrink-0 w-full md:w-[300px] h-auto rounded-xl bg-white shadow-xl border p-4">
-                        <img src="../assets/img1.jpg" alt="Thumbnail Artikel"
-                            class="w-full h-48 object-cover rounded-t-xl mb-4">
-                        <h3 class="text-lg font-semibold text-custom-blue">Judul Artikel Keempat</h3>
-                        <p class="text-sm text-gray-600 mt-2 text-justify">
-                            Ini adalah ringkasan atau deskripsi singkat dari artikel keempat. Informasi ini sangat
-                            berguna
-                            untuk pembaca.
-                        </p>
-                        <div class="flex mt-4">
-                            <a href="#"
-                                class="flex items-center text-custom-green font-semibold hover:underline justify-center gap-x-2">
-                                <span>Baca Selengkapnya</span>
-                                <x-bi-arrow-right-circle-fill />
-                            </a>
-                        </div>
-                    </div>
-                    <div class="flex-shrink-0 w-full md:w-[300px] h-auto rounded-xl bg-white shadow-xl border p-4">
-                        <img src="../assets/img1.jpg" alt="Thumbnail Artikel"
-                            class="w-full h-48 object-cover rounded-t-xl mb-4">
-                        <h3 class="text-lg font-semibold text-custom-blue">Judul Artikel Keempat</h3>
-                        <p class="text-sm text-gray-600 mt-2 text-justify">
-                            Ini adalah ringkasan atau deskripsi singkat dari artikel keempat. Informasi ini sangat
-                            berguna
-                            untuk pembaca.
-                        </p>
-                        <div class="flex mt-4">
-                            <a href="#"
+                            <a href="/berita"
                                 class="flex items-center text-custom-green font-semibold hover:underline justify-center gap-x-2">
                                 <span>Baca Selengkapnya</span>
                                 <x-bi-arrow-right-circle-fill />
@@ -468,11 +328,56 @@
                     </div>
                 </div>
             </div>
-            <a href="#"
+            <a href="/berita"
                 class="hidden text-center bg-gradient-to-tr from-custom-green to-custom-blue items-center justify-center md:flex text-white font-semibold px-5 py-2  rounded-lg"
-                type="button">Lihat Artikel
+                type="button">Lihat Berita
                 Lainnya</a>
         </div>
     </div>
 
 </x-layout>
+
+
+<script>
+    function setSelectedSpecialist(spesialis) {
+        document.getElementById('dropdownDelayButton').textContent = 'Spesialis ' + spesialis;
+        updateDokterList(spesialis);
+    }
+
+    function setSelectedDay(day) {
+        document.getElementById('pilihhari').textContent = day;
+        // document.getElementById('selected_day').value = day;
+    }
+
+    // Ambil data dari Blade Template
+    const jadwalDokter = @json($jadwalDokter);
+
+
+    // Fungsi untuk memperbarui daftar dokter
+    function updateDokterList(spesialis) {
+        const dokterListContainer = document.getElementById('dokterList');
+
+        // Kosongkan daftar dokter sebelumnya
+        dokterListContainer.innerHTML = '';
+
+        // Filter dokter berdasarkan spesialis
+        const filteredDokter = jadwalDokter.filter(dokter => dokter.spesialis === spesialis);
+
+        // Tambahkan dokter baru ke dalam daftar
+        filteredDokter.forEach(dokter => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+            <p class="block text-white px-4 py-2 hover:bg-custom-blue" onclick="setSelectedDokter('${dokter.nama}')">
+                ${dokter.nama}
+            </p>
+        `;
+            dokterListContainer.appendChild(li);
+        });
+    }
+
+    // Fungsi untuk mengatur dokter yang dipilih
+    function setSelectedDokter(dokter) {
+        // Ubah teks tombol dropdown dokter
+        document.getElementById('dropdownDokterButton').textContent = dokter;
+    }
+</script>

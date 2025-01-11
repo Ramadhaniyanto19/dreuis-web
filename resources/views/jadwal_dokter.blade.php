@@ -39,7 +39,9 @@
             <div class="flex flex-col w-[90%] h-auto pb-10 border rounded-lg bg-white shadow-lg">
                 <div class="flex flex-col items-center mt-4 justify-center my-4 text-center gap-y-4">
                     <h2 class="text-3xl font-bold text-custom-blue">Cari Jadwal Dokter</h2>
-                    <p class="text-sm text-custom-green w-80">Temukan jadwal dokter yang sesuai dengan kebutuhan Anda.
+                    <p class="text-sm text-custom-green w-80 md:w-[800px]">Temukan jadwal dokter yang sesuai dengan
+                        kebutuhan
+                        Anda.
                         Klik
                         tombol "Cari" untuk melihat daftar dokter yang tersedia. <span class="text-slate-400"> *Untuk
                             jadwal
@@ -67,22 +69,14 @@
                                 class="z-10 hidden bg-custom-green text-white divide-y divide-gray-100 rounded-lg shadow md:w-[83%] w-[80%] dark:bg-custom-blue h-32 overflow-y-scroll">
                                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
                                     aria-labelledby="dropdownDelayButton">
-                                    <li>
-                                        <a href="#"
-                                            class="block text-white px-4 py-2 hover:bg-custom-blue">Dashboard</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            class="block px-4 py-2 hover:bg-custom-blue text-white">Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            class="block px-4 py-2 hover:bg-custom-blue text-white">Earnings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="block px-4 py-2 hover:bg-custom-blue text-white">Sign
-                                            out</a>
-                                    </li>
+                                    @foreach ($jadwalDokter as $jadwal)
+                                        <li>
+                                            <p class="block text-white px-4 py-2 hover:bg-custom-blue"
+                                                onclick="setSelectedSpecialist('{{ $jadwal['spesialis'] }}')">
+                                                Spesialis {{ $jadwal['spesialis'] }}
+                                            </p>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -90,7 +84,7 @@
                         {{-- Pilih Hari --}}
                         <div class="flex flex-col gap-y-2">
                             <p class="text-slate-700 text-base">Pilih hari</p>
-                            <button id="dropdownDelayButton" data-dropdown-toggle="pilihHari" data-dropdown-delay="500"
+                            <button id="pilihhari" data-dropdown-toggle="pilihHari" data-dropdown-delay="500"
                                 data-dropdown-trigger="hover"
                                 class="text-slate-600 w-[94%] bg-white border border-gray-300 hover:bg-custom-green focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg hover:text-white text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 relative"
                                 type="button">Pilih Hari<svg class="w-2.5 h-2.5 absolute right-2 " aria-hidden="true"
@@ -101,61 +95,37 @@
                             </button>
                             <div id="pilihHari"
                                 class="z-10 hidden bg-custom-green text-white divide-y divide-gray-100 rounded-lg shadow md:w-[83%] w-[80%] dark:bg-custom-blue h-32 overflow-y-scroll">
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                    aria-labelledby="dropdownDelayButton">
-                                    <li>
-                                        <a href="#"
-                                            class="block text-white px-4 py-2 hover:bg-custom-blue">Hari</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            class="block px-4 py-2 hover:bg-custom-blue text-white">Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            class="block px-4 py-2 hover:bg-custom-blue text-white">Earnings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="block px-4 py-2 hover:bg-custom-blue text-white">Sign
-                                            out</a>
-                                    </li>
+                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="pilihhari">
+                                    @php
+                                        $days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+                                    @endphp
+                                    @foreach ($days as $day)
+                                        <li>
+                                            <p class="block text-white px-4 py-2 hover:bg-custom-blue" id="selectedDay"
+                                                onclick="setSelectedDay('{{ $day }}')">
+                                                {{ $day }}</p>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
 
                         {{-- Pilih Dokter --}}
-                        <div class="flex flex-col gap-y-2 w-full">
+                        <div class="flex flex-col gap-y-2 w-full mt-4">
                             <p class="text-slate-700 text-base">Pilih Dokter</p>
-                            <button id="dropdownDelayButton" data-dropdown-toggle="pilihDokter"
-                                data-dropdown-delay="500" data-dropdown-trigger="hover"
+                            <button id="dropdownDokterButton" data-dropdown-toggle="pilihDokter"
                                 class="text-slate-600 w-[94%] bg-white border border-gray-300 hover:bg-custom-green focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg hover:text-white text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 relative"
-                                type="button">Pilih Hari<svg class="w-2.5 h-2.5 absolute right-2 "
-                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 10 6">
+                                type="button">Pilih Dokter<svg class="w-2.5 h-2.5 absolute right-2" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2" d="m1 1 4 4 4-4" />
                                 </svg>
                             </button>
                             <div id="pilihDokter"
                                 class="z-10 hidden bg-custom-green text-white divide-y divide-gray-100 rounded-lg shadow md:w-[83%] w-[80%] dark:bg-custom-blue h-32 overflow-y-scroll">
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                    aria-labelledby="dropdownDelayButton">
-                                    <li>
-                                        <a href="#" class="block text-white px-4 py-2 hover:bg-custom-blue">Drs
-                                            Mira</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            class="block px-4 py-2 hover:bg-custom-blue text-white">Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            class="block px-4 py-2 hover:bg-custom-blue text-white">Earnings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="block px-4 py-2 hover:bg-custom-blue text-white">Sign
-                                            out</a>
-                                    </li>
+                                <ul id="dokterList" class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                    aria-labelledby="dropdownDokterButton">
+                                    <!-- Dokter akan dimasukkan di sini oleh JavaScript -->
                                 </ul>
                             </div>
                         </div>
@@ -168,5 +138,177 @@
                 </div>
             </div>
         </div>
+        <div class="flex flex-col gap-y-4 w-full h-full justify-center items-center">
+            @foreach ($jadwalDokter as $jadwal)
+                <div
+                    class="flex flex-col md:flex-row items-center w-[90%] h-auto md:h-60 bg-white shadow-lg border-slate-200 border rounded-xl px-4 py-4 md:gap-x-14">
+                    <div class="flex flex-col md:flex-row gap-x-8 items-center w-full md:w-[40%]">
+                        <img src="../assets/doctor.jpg" class="w-24 h-24 md:w-48 md:h-48 rounded-full"
+                            alt="">
+                        <div
+                            class="flex flex-col gap-y-2.5 w-full md:w-72 text-center justify-center items-center md:items-start md:text-left">
+                            <h2 class="text-black font-semibold text-lg">{{ $jadwal['nama'] }}</h2>
+                            <p class="text-sm">Spesialis {{ $jadwal['spesialis'] }}</p>
+                            <a href="{{ url('/buat-janji?dokter=' . urlencode($jadwal['nama']) . '&spesialis=' . urlencode($jadwal['spesialis'])) }}"
+                                class="bg-gradient-to-bl from-custom-blue to-custom-green text-white font-semibold w-32 text-center py-1 rounded-lg text-sm cursor-pointer">
+                                Booking sekarang
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <!-- Table days -->
+                    <div
+                        class="relative overflow-x-auto mt-4 md:mt-0 md:ml-3 w-full  [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-0.5
+                        pb-10
+                        [&::-webkit-scrollbar-track]:bg-gray-100
+                        [&::-webkit-scrollbar-thumb]:bg-gray-300
+                        dark:[&::-webkit-scrollbar-track]:bg-neutral-700
+                        dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
+                        <table class="w-full text-sm text-center text-gray-500 dark:text-gray-400">
+                            <thead
+                                class="text-xs text-white font-bold bg-gradient-to-br from-custom-green to-custom-blue">
+                                <tr>
+                                    <th scope="col" class="px-2 md:px-3 py-3 font-bold">Senin</th>
+                                    <th scope="col" class="px-2 md:px-3 py-3 font-bold">Selasa</th>
+                                    <th scope="col" class="px-2 md:px-3 py-3 font-bold">Rabu</th>
+                                    <th scope="col" class="px-2 md:px-3 py-3 font-bold">Kamis</th>
+                                    <th scope="col" class="px-2 md:px-3 py-3 font-bold">Jumat</th>
+                                    <th scope="col" class="px-2 md:px-3 py-3 font-bold">Sabtu</th>
+                                    <th scope="col" class="px-2 md:px-3 py-3 font-bold">Minggu</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white border-b">
+                                    @php
+                                        // Array hari untuk mapping jadwal
+                                        $days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+                                    @endphp
+                                    @foreach ($days as $day)
+                                        @php
+                                            // Mencari jadwal yang sesuai
+                                            $schedule = collect($jadwal['jadwal'])->first(function ($item) use ($day) {
+                                                // Cek apakah hari ada dalam jadwal (rentang atau daftar)
+                                                $hari = $item['hari'];
+                                                if (str_contains($hari, '-')) {
+                                                    // Jika rentang hari, buat array hari di antara rentang
+                                                    [$start, $end] = explode('-', $hari);
+                                                    $dayRange = collect([
+                                                        'Senin',
+                                                        'Selasa',
+                                                        'Rabu',
+                                                        'Kamis',
+                                                        'Jumat',
+                                                        'Sabtu',
+                                                        'Minggu',
+                                                    ])
+                                                        ->slice(
+                                                            array_search($start, [
+                                                                'Senin',
+                                                                'Selasa',
+                                                                'Rabu',
+                                                                'Kamis',
+                                                                'Jumat',
+                                                                'Sabtu',
+                                                                'Minggu',
+                                                            ]),
+                                                            array_search($end, [
+                                                                'Senin',
+                                                                'Selasa',
+                                                                'Rabu',
+                                                                'Kamis',
+                                                                'Jumat',
+                                                                'Sabtu',
+                                                                'Minggu',
+                                                            ]) -
+                                                                array_search($start, [
+                                                                    'Senin',
+                                                                    'Selasa',
+                                                                    'Rabu',
+                                                                    'Kamis',
+                                                                    'Jumat',
+                                                                    'Sabtu',
+                                                                    'Minggu',
+                                                                ]) +
+                                                                1,
+                                                        )
+                                                        ->toArray();
+                                                    return in_array($day, $dayRange);
+                                                } elseif (str_contains($hari, ',')) {
+                                                    // Jika daftar hari, pecah string menjadi array
+                                                    $dayList = array_map('trim', explode(',', $hari));
+                                                    return in_array($day, $dayList);
+                                                } else {
+                                                    // Cek hari tunggal
+                                                    return $hari === $day;
+                                                }
+                                            });
+                                        @endphp
+                                        <td class="px-2 md:px-6 py-4">
+                                            @if ($schedule)
+                                                <div class="flex flex-col gap-y-0.5">
+                                                    <span class="font-bold text-xs w-20">{{ $schedule['jam'] }}</span>
+                                                    <span class="text-[9px]">Umum dan BPJS</span>
+                                                </div>
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                    @endforeach
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            @endforeach
+
+
+        </div>
+
     </div>
 </x-layout>
+
+
+<script>
+    function setSelectedSpecialist(spesialis) {
+        document.getElementById('dropdownDelayButton').textContent = 'Spesialis ' + spesialis;
+        updateDokterList(spesialis);
+    }
+
+    function setSelectedDay(day) {
+        document.getElementById('pilihhari').textContent = day;
+        // document.getElementById('selected_day').value = day;
+    }
+
+    // Ambil data dari Blade Template
+    const jadwalDokter = @json($jadwalDokter);
+
+
+    // Fungsi untuk memperbarui daftar dokter
+    function updateDokterList(spesialis) {
+        const dokterListContainer = document.getElementById('dokterList');
+
+        // Kosongkan daftar dokter sebelumnya
+        dokterListContainer.innerHTML = '';
+
+        // Filter dokter berdasarkan spesialis
+        const filteredDokter = jadwalDokter.filter(dokter => dokter.spesialis === spesialis);
+
+        // Tambahkan dokter baru ke dalam daftar
+        filteredDokter.forEach(dokter => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+            <p class="block text-white px-4 py-2 hover:bg-custom-blue" onclick="setSelectedDokter('${dokter.nama}')">
+                ${dokter.nama}
+            </p>
+        `;
+            dokterListContainer.appendChild(li);
+        });
+    }
+
+    // Fungsi untuk mengatur dokter yang dipilih
+    function setSelectedDokter(dokter) {
+        // Ubah teks tombol dropdown dokter
+        document.getElementById('dropdownDokterButton').textContent = dokter;
+    }
+</script>

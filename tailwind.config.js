@@ -14,6 +14,7 @@ export default {
             },
             backgroundImage: {
                 "custom-bg": "url('/assets/img1.jpg')",
+                "custom-bg-login": "url('../public/assets/bg-login.jpg')",
             },
         },
     },

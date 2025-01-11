@@ -7,28 +7,35 @@
 </footer>
 
 <footer class="items-center justify-center text-center w-full md:hidden flex flex-col h-24 fixed bottom-0">
-    <div class="flex flex-row w-full h-full border-slate-400 rounded-t-3xl bg-white border shadow-xl">
+    <div
+        class="flex flex-row w-full h-full justify-between px-8 border-slate-400 rounded-t-3xl bg-white border shadow-xl">
         <!-- Konten 1 -->
-        <div class="flex flex-col items-center justify-center w-1/3">
-            <a href="#" class="text-center items-center flex flex-col">
-                <x-zondicon-calendar class="w-6 h-6 font-bold text-custom-green" />
+        <div class="flex flex-col items-center justify-center ">
+            <a href="/" class="text-center items-center flex flex-col">
+                <x-zondicon-home class="w-6 h-6 font-bold text-custom-green" />
+                <p class="text-sm font-semibold text-custom-blue">Home</p>
+            </a>
+        </div>
+        <div class="flex flex-col items-center justify-center ">
+            <a href="/jadwal-dokter" class="text-center items-center flex flex-col">
+                <x-zondicon-calendar class="w-6 h-6 font-bold text-custom-blue" />
                 <p class="text-sm font-semibold text-custom-blue">Jadwal Dokter</p>
             </a>
         </div>
 
         <!-- Konten 2 -->
-        <div class="flex flex-col items-center justify-center w-1/3">
-            <a href="#" class="text-center items-center flex flex-col">
-                <x-hugeicons-promotion class="w-6 h-6 text-custom-blue" />
+        <div class="flex flex-col items-center justify-center ">
+            <a href="/promo" class="text-center items-center flex flex-col">
+                <x-hugeicons-promotion class="w-6 h-6 text-custom-green" />
                 <p class="text-sm font-semibold text-custom-blue">Promo</p>
             </a>
         </div>
 
         <!-- Konten 3 -->
-        <div class="flex flex-col items-center justify-center w-1/3">
-            <a href="#" class="text-center items-center flex flex-col">
-                <x-vaadin-doctor-briefcase class="w-6 h-6 text-custom-green" />
-                <p class="text-sm font-semibold text-custom-blue">Buat Janji</p>
+        <div class="flex flex-col items-center justify-center ">
+            <a href="/buat-janji" class="text-center items-center flex flex-col">
+                <x-vaadin-doctor-briefcase class="w-6 h-6 text-custom-blue" />
+                <p class="text-sm font-semibold text-custom-blue">Berita</p>
             </a>
         </div>
     </div>
