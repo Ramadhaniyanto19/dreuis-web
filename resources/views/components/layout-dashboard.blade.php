@@ -11,6 +11,7 @@
 
 <body>
     <div class="w-full h-full flex flex-col relative">
+        <x-sidebar></x-sidebar>
         <main class="flex flex-col w-full h-full">
             {{ $slot }}
         </main>
