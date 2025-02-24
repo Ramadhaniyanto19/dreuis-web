@@ -7,20 +7,39 @@
             <div class="flex mt-4 items-center justify-center">
                 <h1 class="text-3xl font-bold text-custom-blue">Login</h1>
             </div>
-            <div class="flex flex-col px-4 mt-6">
-                <form action="" class="gap-y-4 flex flex-col">
+
+            <!-- Menampilkan Alert -->
+            <div class="px-4 mt-4">
+                @if (session('success'))
+                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-3 mb-3 rounded">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-3 mb-3 rounded">
+                        {{ session('error') }}
+                    </div>
+                @endif
+            </div>
+
+            <div class="flex flex-col px-4 mt-2">
+                <form action="{{ url('/dashboard/login') }}" method="POST" class="gap-y-4 flex flex-col">
+                    @csrf
                     <div class="flex flex-col w-full gap-y-2">
                         <label for="email">Email<span class="text-red-500 font-bold text-sm">*</span></label>
-                        <input type="email" class="rounded-xl ring-0 border-slate-300" placeholder="Masukan email"
-                            required>
+                        <input type="email" name="email" class="rounded-xl ring-0 border-slate-300 px-3 py-2"
+                            placeholder="Masukan email" required>
                     </div>
                     <div class="flex flex-col w-full gap-y-2">
                         <label for="password">Password<span class="text-red-500 font-bold text-sm">*</span></label>
-                        <input type="password" class="rounded-xl ring-0 border-slate-300" placeholder="Masukan password"
-                            required>
+                        <input type="password" name="password" class="rounded-xl ring-0 border-slate-300 px-3 py-2"
+                            placeholder="Masukan password" required>
                     </div>
-                    <button
-                        class="bg-custom-blue mt-4 hover:bg-custom-green text-white font-bold w-full h-12 rounded-xl">Login</button>
+                    <button type="submit"
+                        class="bg-custom-blue mt-4 hover:bg-custom-green text-white font-bold w-full h-12 rounded-xl">
+                        Login
+                    </button>
                 </form>
             </div>
         </div>
