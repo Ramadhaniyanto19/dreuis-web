@@ -9,9 +9,10 @@ use App\Http\Controllers\PromoController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\RiwayatJanjiController;
 use App\Http\Controllers\CarouselController;
+use App\Http\Controllers\HomeController;
 
 // Route untuk halaman utama
-Route::get('/', [JadwalDokterController::class, 'home'])->name('home');
+// Route::get('/', [JadwalDokterController::class, 'home'])->name('home');
 
 // Route untuk jadwal dokter
 Route::resource('/jadwal-dokter', JadwalDokterController::class);
@@ -57,5 +58,8 @@ Route::resource('/dashboard-promo', PromoController::class)->middleware('auth');
 
 
 // Carousel
+Route::resource('dashboard-carousel', CarouselController::class)->middleware('auth');
 
-Route::resource('dashboard-carousel', CarouselController::class);
+
+// routes/web.php
+Route::get('/', [HomeController::class, 'index'])->name('home');

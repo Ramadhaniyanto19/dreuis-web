@@ -2,36 +2,25 @@
     <div class="flex flex-col w-full h-full items-center justify-center mb-28 gap-y-10">
 
         {{-- Carousel --}}
-        <div id="default-carousel" class="relative w-full -mt-4" data-carousel="slide">
+        <div id="default-carousel" class="relative w-full bg-slate-100" data-carousel="slide">
             <!-- Carousel wrapper -->
-            <div class="relative h-56 overflow-hidden md:h-96">
-                <!-- Item 1 -->
-                <div class="hidden duration-700 ease-in-out w-full h-full" data-carousel-item>
-                    <img src="../assets/img1.jpg"
-                        class="absolute block  -translate-x-1/2 object-cover -translate-y-1/2 top-1/2 left-1/2"
-                        alt="Nature and Water">
-                </div>
-                <!-- Item 2 -->
-                <div class="hidden duration-700 ease-in-out w-full h-full" data-carousel-item>
-                    <img src="../assets/img2.jpg"
-                        class="absolute block  -translate-x-1/2 object-cover -translate-y-1/2 top-1/2 left-1/2"
-                        alt="City at Night">
-                </div>
-                <!-- Item 3 -->
-                <div class="hidden duration-700 ease-in-out w-full h-full" data-carousel-item>
-                    <img src="../assets/img1.jpg"
-                        class="absolute block w-full object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                        alt="Mountains and Sky">
-                </div>
+            <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+                @foreach ($carousels as $carousel)
+                    <!-- Item -->
+                    <div class="hidden duration-700 ease-in-out w-full h-full" data-carousel-item>
+                        <img src="{{ asset('storage/' . $carousel->image) }}"
+                            class="absolute block w-full h-full object-fill -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                            alt="{{ $carousel->name }}">
+                    </div>
+                @endforeach
             </div>
             <!-- Slider indicators -->
             <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1"
-                    data-carousel-slide-to="0"></button>
-                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2"
-                    data-carousel-slide-to="1"></button>
-                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3"
-                    data-carousel-slide-to="2"></button>
+                @foreach ($carousels as $index => $carousel)
+                    <button type="button" class="w-3 h-3 rounded-full"
+                        aria-current="{{ $index === 0 ? 'true' : 'false' }}" aria-label="Slide {{ $index + 1 }}"
+                        data-carousel-slide-to="{{ $index }}"></button>
+                @endforeach
             </div>
             <!-- Slider controls -->
             <button type="button"
@@ -63,16 +52,7 @@
         </div>
 
         {{-- Jadwal Dokter --}}
-        <div class="flex md:flex-row md:px-16 flex-col w-full items-center justify-center gap-x-10 gap-y-4">
-            {{-- Optional --}}
-            {{-- <div class="flex flex-col h-96 items-center justify-center bg-white w-[90%] shadow-xl">
-                <h1 class="text-2xl font-bold text-custom-blue text-center">RS DR EUIS</h1>
-                <p class="text-center text-base">RS Dr. Euis menjadi pilihan karena kombinasi kualitas layanan kesehatan
-                    yang unggul dan pelayanan
-                    yang ramah serta profesional. Rumah sakit ini dikenal dengan fasilitas medis yang modern dan
-                    lengkap, didukung oleh tenaga medis berpengalaman, seperti dokter spesialis, perawat, dan staf yang
-                    berkomitmen memberikan pelayanan terbaik.</p>
-            </div> --}}
+        <div class="flex md:flex-row md:px-16 flex-col w-full items-center justify-center gap-x-10 gap-y-4 -mt-1.5">
             <div class="flex flex-col w-[90%] md:w-1/2 h-auto pb-10 border rounded-lg bg-white shadow-lg">
                 <div class="flex flex-col items-center mt-4 justify-center my-4 text-center gap-y-4">
                     <h2 class="text-3xl font-bold text-custom-blue">Cari Jadwal Dokter</h2>
@@ -210,30 +190,76 @@
                     <div class="w-20 md:w-60 h-0.5 bg-gradient-to-l from-custom-blue to-custom-green"></div>
                 </div>
             </div>
-            <div class="flex items-center justify-center text-center py-32">
-                <p class="text-base md:text-xl text-slate-200 font-semibold">Belum ada promo.</p>
-            </div>
-            {{-- <div class="grid md:grid-cols-3 grid-cols-1 gap-4 w-[90%] h-full items-center justify-center">
-                <div class="flex flex-col w-full h-full rounded-xl items-center justify-center bg-white shadow-xl border gap-y-1 cursor-pointer"
-                    data-modal-target="static-modal" data-modal-toggle="static-modal">
-                    <img src="../assets/img1.jpg" width="100%" height="100%" class="bg-cover rounded-xl"
-                        alt="">
-                </div>
+
+            @if ($promos->count() > 0)
                 <div
-                    class="flex flex-col w-full h-full rounded-xl items-center justify-center bg-white shadow-xl border gap-y-1">
-                    <img src="../assets/img1.jpg" width="100%" height="100%" class="bg-cover rounded-xl"
-                        alt="">
+                    class="grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 gap-4 w-[90%] h-full items-center justify-center">
+                    @foreach ($promos as $promo)
+                        <div class="flex flex-col w-full h-full rounded-xl items-center justify-center bg-white shadow-xl border gap-y-1 cursor-pointer"
+                            data-modal-target="static-modal-{{ $promo->id }}"
+                            data-modal-toggle="static-modal-{{ $promo->id }}">
+                            <img src="{{ asset('storage/' . $promo->gambar) }}" width="100%" height="100%"
+                                class="bg-cover rounded-xl" alt="{{ $promo->promoName }}">
+                        </div>
+
+                        <!-- Modal untuk setiap promo -->
+                        <div id="static-modal-{{ $promo->id }}" data-modal-backdrop="static" tabindex="-1"
+                            aria-hidden="true"
+                            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                            <div class="relative p-4 w-full max-w-2xl max-h-full">
+                                <!-- Modal content -->
+                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                    <!-- Modal header -->
+                                    <div
+                                        class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                            {{ $promo->promoName }}
+                                        </h3>
+                                        <button type="button"
+                                            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                            data-modal-hide="static-modal-{{ $promo->id }}">
+                                            <svg class="w-3 h-3" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                viewBox="0 0 14 14">
+                                                <path stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2"
+                                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                                            </svg>
+                                            <span class="sr-only">Close modal</span>
+                                        </button>
+                                    </div>
+                                    <!-- Modal body -->
+                                    <div class="p-4 space-y-4 flex flex-col">
+                                        <img src="{{ asset('storage/' . $promo->gambar) }}"
+                                            class="w-80 h-72 px-8 rounded-lg mx-auto"
+                                            alt="{{ $promo->promoName }}" />
+                                        <p class="text-sm md:text-base">{{ $promo->desc_promo }}</p>
+                                    </div>
+                                    <!-- Modal footer -->
+                                    <div
+                                        class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                                        <a href="https://wa.me/6281234567890?text=Haii%20kaka%20admin,%20saya%20mau%20menanyakan%20perihal%20{{ urlencode($promo->name) }},%20apakah%20masih%20berlaku%20dan%20tersedia%20kuotanya%20hingga%20saat%20ini?"
+                                            target="_blank">
+                                            <button data-modal-hide="static-modal-{{ $promo->id }}" type="button"
+                                                class="text-white w-full bg-gradient-to-tr from-custom-green to-custom-blue hover:bg-custom-green focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-32 md:px-64 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                Dapatkan Promo
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-                <div
-                    class="flex flex-col w-full h-full rounded-xl items-center justify-center bg-white shadow-xl border gap-y-1">
-                    <img src="../assets/img1.jpg" width="100%" height="100%" class="bg-cover rounded-xl"
-                        alt="">
+            @else
+                <div class="flex items-center justify-center text-center py-32">
+                    <p class="text-base md:text-xl text-slate-200 font-semibold">Belum ada promo.</p>
                 </div>
-            </div> --}}
-            <a href="#"
-                class="hidden text-center bg-gradient-to-tr from-custom-green to-custom-blue items-center justify-center md:flex text-white font-semibold px-5 py-2  rounded-lg"
-                type="button">Lihat Promo
-                Lainnya</a>
+            @endif
+
+            <a href="/promo"
+                class="hidden text-center bg-gradient-to-tr from-custom-green to-custom-blue items-center justify-center md:flex text-white font-semibold px-5 py-2 rounded-lg"
+                type="button">Lihat Promo Lainnya</a>
         </div>
 
         {{-- Modal Promo --}}

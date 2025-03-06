@@ -131,6 +131,9 @@
                 </div>
             @endif
         </div>
+        <div class="mt-4">
+            {{ $doctors->links() }}
+        </div>
 
         <!-- Main Modal -->
         <div id="crud-modal" tabindex="-1" aria-hidden="true"

@@ -66,14 +66,27 @@ class CarouselController extends Controller
     }
 
     // Menghapus carousel
-    public function destroy(Carousel $carousel)
+    public function destroy($id)
     {
-        // Hapus gambar dari storage
-        Storage::disk('public')->delete($carousel->image);
 
-        // Hapus data dari database
+        $carousel = Carousel::findOrFail($id);
+        if ($carousel->image) {
+            Storage::disk('public')->delete($carousel->image);
+        }
         $carousel->delete();
+
 
         return redirect()->route('dashboard-carousel.index')->with('success', 'Carousel berhasil dihapus!');
     }
+
+    // public function destroy($id)
+    // {
+    //     $doctor = Doctor::findOrFail($id);
+    //     if ($doctor->image) {
+    //         Storage::disk('public')->delete($doctor->image);
+    //     }
+    //     $doctor->delete();
+
+    //     return redirect()->route('dashboard-dokter.index')->with('success', 'Dokter berhasil dihapus!');
+    // }
 }

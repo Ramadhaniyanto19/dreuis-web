@@ -80,7 +80,7 @@
                                 <!-- Modal body -->
                                 <div class="p-4 md:p-5 space-y-4 ">
                                     <div class="flex items-center justify-center w-full h-full">
-                                        <img src="{{ asset('storage/' . $promo->gambar) }}" class=" w-[80%] h-[80%]"
+                                        <img src="{{ asset('storage/' . $promo->gambar) }}" class=" w-80 h-72"
                                             alt="{{ $promo->promoName }}" />
                                     </div>
                                     <p class="text-sm md:text-base">{{ $promo->desc_promo }}</p>
@@ -91,8 +91,9 @@
                                 <!-- Modal footer -->
                                 <div
                                     class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                    <a href="#">
-                                        <button data-modal-hide="promo-modal-{{ $promo->id }}" type="button"
+                                    <a href="https://wa.me/6281234567890?text=Haii%20kaka%20admin,%20saya%20mau%20menanyakan%20perihal%20{{ urlencode($promo->name) }},%20apakah%20masih%20berlaku%20dan%20tersedia%20kuotanya%20hingga%20saat%20ini?"
+                                        target="_blank">
+                                        <button data-modal-hide="static-modal-{{ $promo->id }}" type="button"
                                             class="text-white w-full bg-gradient-to-tr from-custom-green to-custom-blue hover:bg-custom-green focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-32 md:px-64 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                             Dapatkan Promo
                                         </button>

@@ -84,5 +84,9 @@
                 </div>
             @endif
         </div>
+        <div class="mt-4">
+            {{ $appointment->links() }}
+        </div>
     </div>
+
 </x-partial-dashboard>

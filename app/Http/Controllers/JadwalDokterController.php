@@ -67,41 +67,7 @@ class JadwalDokterController extends Controller
         return view('jadwal_dokter', compact('doctors'));
     }
 
-    public function home(Request $request)
-    {
-        // Validasi input
-        $request->validate([
-            'specialization' => 'nullable|string',
-            'day' => 'nullable|string',
-        ]);
 
-        // Ambil semua spesialisasi unik dari dokter
-        $specializations = Doctor::select('specialization')->distinct()->pluck('specialization');
-
-        // Ambil semua hari kerja unik dari jadwal dokter
-        $days = DoctorSchedule::select('day')->distinct()->pluck('day');
-
-        // Ambil semua dokter dengan relasi jadwalnya
-        $query = Doctor::with('schedules');
-
-        // Filter berdasarkan spesialisasi (jika dipilih)
-        if ($request->has('specialization') && $request->specialization !== 'Pilih Spesialis') {
-            $query->where('specialization', $request->specialization);
-        }
-
-        // Filter berdasarkan hari kerja dokter (jika dipilih)
-        if ($request->has('day') && $request->day !== 'Pilih Hari') {
-            $query->whereHas('schedules', function ($q) use ($request) {
-                $q->where('day', $request->day);
-            });
-        }
-
-        // Paginasi hasil query
-        $doctorsPaginated = $query->paginate(10);
-        $doctors = $doctorsPaginated->items(); // Ambil hanya daftar dokter dalam bentuk array
-
-        return view('home', compact('doctors', 'doctorsPaginated', 'specializations', 'days'));
-    }
     public function search_doctors(Request $request)
     {
         // Validasi input

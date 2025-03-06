@@ -137,6 +137,9 @@
             @endif
         </div>
     </div>
+    <div class="mt-4">
+        {{ $promos->links() }}
+    </div>
 
     <script>
         // Modal Logic
