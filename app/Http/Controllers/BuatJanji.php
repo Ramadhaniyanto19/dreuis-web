@@ -11,7 +11,7 @@ class BuatJanji extends Controller
         // Mengambil data dokter dan spesialis dari query string
         $dokter = $request->query('dokter');
         $spesialis = $request->query('spesialis');
-        $hari = $request->query('hari');
+        $hari = $request->query('hari', 'Senin');
 
         // Mengirimkan data ke view
         return view('buat-janji', compact('dokter', 'spesialis', 'hari'));

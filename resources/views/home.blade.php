@@ -85,90 +85,81 @@
                             berikut 628938383838.</span></p>
                 </div>
                 <div class="flex flex-col pl-4">
-                    <form action="" class="gap-y-2 flex flex-col">
-
-                        {{-- Layanan Kesehatan --}}
+                    <form action="{{ route('home') }}" method="GET" class="gap-y-2 flex flex-col">
+                        {{-- Filter Spesialisasi --}}
                         <div class="flex flex-col gap-y-2">
                             <p class="text-slate-700 text-base">Layanan Kesehatan</p>
                             <button id="dropdownDelayButton" data-dropdown-toggle="layananKesehatan"
-                                data-dropdown-delay="500" data-dropdown-trigger="hover"
-                                class="text-slate-600 w-[94%] bg-white border border-gray-300 hover:bg-custom-green focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg hover:text-white text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 relative"
-                                type="button">Pilih Spesialis<svg class="w-2.5 h-2.5 absolute right-2 "
-                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 10 6">
+                                class="text-slate-600 w-[94%] bg-white border border-gray-300 hover:bg-custom-green focus:ring-4 focus:outline-none font-medium rounded-lg hover:text-white text-sm px-5 py-2.5 text-center inline-flex items-center relative"
+                                type="button">
+                                {{ request('specialization', 'Pilih Spesialis') }}
+                                <svg class="w-2.5 h-2.5 absolute right-2" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2" d="m1 1 4 4 4-4" />
                                 </svg>
                             </button>
                             <div id="layananKesehatan"
-                                class="z-10 hidden bg-custom-green text-white divide-y divide-gray-100 rounded-lg shadow md:w-[41%] w-[80%] dark:bg-custom-blue h-32 overflow-y-scroll">
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                    aria-labelledby="dropdownDelayButton">
-                                    @foreach ($jadwalDokter as $jadwal)
+                                class="z-10 hidden bg-custom-green text-white divide-y divide-gray-100 rounded-lg shadow md:w-[41%] w-[80%] h-32 overflow-y-scroll">
+                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                                    <li>
+                                        <button type="button" onclick="setSpecialization('')"
+                                            class="block text-white px-4 py-2 hover:bg-custom-blue w-full text-left">
+                                            Semua Spesialis
+                                        </button>
+                                    </li>
+                                    @foreach ($specializations as $specialization)
                                         <li>
-                                            <p class="block text-white px-4 py-2 hover:bg-custom-blue"
-                                                onclick="setSelectedSpecialist('{{ $jadwal['spesialis'] }}')">
-                                                Spesialis {{ $jadwal['spesialis'] }}
-                                            </p>
+                                            <button type="button" onclick="setSpecialization('{{ $specialization }}')"
+                                                class="block text-white px-4 py-2 hover:bg-custom-blue w-full text-left">
+                                                Spesialis {{ $specialization }}
+                                            </button>
                                         </li>
                                     @endforeach
                                 </ul>
                             </div>
+                            <input type="hidden" name="specialization" id="specializationInput"
+                                value="{{ request('specialization') }}">
                         </div>
 
-                        {{-- Pilih Hari --}}
+                        {{-- Filter Hari --}}
                         <div class="flex flex-col gap-y-2">
-                            <p class="text-slate-700 text-base">Pilih hari</p>
-                            <button id="pilihhari" data-dropdown-toggle="pilihHari" data-dropdown-delay="500"
-                                data-dropdown-trigger="hover"
-                                class="text-slate-600 w-[94%] bg-white border border-gray-300 hover:bg-custom-green focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg hover:text-white text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 relative"
-                                type="button">Pilih Hari<svg class="w-2.5 h-2.5 absolute right-2 " aria-hidden="true"
+                            <p class="text-slate-700 text-base">Pilih Hari</p>
+                            <button id="pilihhari" data-dropdown-toggle="pilihHari"
+                                class="text-slate-600 w-[94%] bg-white border border-gray-300 hover:bg-custom-green focus:ring-4 focus:outline-none font-medium rounded-lg hover:text-white text-sm px-5 py-2.5 text-center inline-flex items-center relative"
+                                type="button">
+                                {{ request('day', 'Pilih Hari') }}
+                                <svg class="w-2.5 h-2.5 absolute right-2" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2" d="m1 1 4 4 4-4" />
                                 </svg>
                             </button>
                             <div id="pilihHari"
-                                class="z-10 hidden bg-custom-green text-white divide-y divide-gray-100 rounded-lg shadow md:w-[41%] w-[80%] dark:bg-custom-blue h-32 overflow-y-scroll">
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="pilihhari">
-                                    @php
-                                        $days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
-                                    @endphp
+                                class="z-10 hidden bg-custom-green text-white divide-y divide-gray-100 rounded-lg shadow md:w-[41%] w-[80%] h-32 overflow-y-scroll">
+                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                                    <li>
+                                        <button type="button" onclick="setDay('')"
+                                            class="block text-white px-4 py-2 hover:bg-custom-blue w-full text-left">
+                                            Semua Hari
+                                        </button>
+                                    </li>
                                     @foreach ($days as $day)
                                         <li>
-                                            <p class="block text-white px-4 py-2 hover:bg-custom-blue"
-                                                id="selectedDay" onclick="setSelectedDay('{{ $day }}')">
-                                                {{ $day }}</p>
+                                            <button type="button" onclick="setDay('{{ $day }}')"
+                                                class="block text-white px-4 py-2 hover:bg-custom-blue w-full text-left">
+                                                {{ $day }}
+                                            </button>
                                         </li>
                                     @endforeach
                                 </ul>
                             </div>
+                            <input type="hidden" name="day" id="dayInput" value="{{ request('day') }}">
                         </div>
 
-                        {{-- Pilih Dokter --}}
-                        <div class="flex flex-col gap-y-2 w-full mt-4">
-                            <p class="text-slate-700 text-base">Pilih Dokter</p>
-                            <button id="dropdownDokterButton" data-dropdown-toggle="pilihDokter"
-                                class="text-slate-600 w-[94%] bg-white border border-gray-300 hover:bg-custom-green focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg hover:text-white text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 relative"
-                                type="button">Pilih Dokter<svg class="w-2.5 h-2.5 absolute right-2"
-                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 10 6">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m1 1 4 4 4-4" />
-                                </svg>
-                            </button>
-                            <div id="pilihDokter"
-                                class="z-10 hidden bg-custom-green text-white divide-y divide-gray-100 rounded-lg shadow md:w-[83%] w-[80%] dark:bg-custom-blue h-32 overflow-y-scroll">
-                                <ul id="dokterList" class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                    aria-labelledby="dropdownDokterButton">
-                                    <!-- Dokter akan dimasukkan di sini oleh JavaScript -->
-                                </ul>
-                            </div>
-                        </div>
-
-
+                        {{-- Tombol Submit --}}
                         <button type="submit"
-                            class="bg-custom-blue mt-4 hover:bg-custom-green text-white font-bold w-[94%] h-12 rounded-xl ">
+                            class="bg-custom-blue mt-4 hover:bg-custom-green text-white font-bold w-[94%] h-12 rounded-xl">
                             Submit
                         </button>
                     </form>
@@ -190,22 +181,19 @@
                     </div>
                 </div>
 
-                @foreach ($jadwalDokter as $dokter)
+                @foreach ($doctors as $dokter)
                     <div class="flex flex-col md:w-60 pb-4 w-[90%] rounded-xl h-60 bg-white shadow-xl border gap-y-1">
-                        <img src="../assets/doctor.jpg" class="w-24 h-24 rounded-full mx-auto mt-0.5"
-                            alt="Foto {{ $dokter['nama'] }}" />
-                        <p class="text-center text-custom-green font-semibold">{{ $dokter['nama'] }}</p>
-                        <p class="text-center text-custom-blue font-semibold">Spesialis {{ $dokter['spesialis'] }}</p>
+                        <img src="{{ asset('storage/' . $dokter->image) }}"
+                            class="w-24 h-24 rounded-full mx-auto mt-0.5" alt="Foto {{ $dokter['nama'] }}" />
+                        <p class="text-center text-custom-green font-semibold">{{ $dokter['name'] }}</p>
+                        <p class="text-center text-custom-blue font-semibold">Spesialis
+                            {{ $dokter['specialization'] }}
+                        </p>
                         <a href="/jadwal-dokter"
                             class="text-center bg-custom-green items-center justify-center flex text-white font-semibold px-5 py-2 rounded-lg mx-auto">Lihat
                             Jadwal</a>
                     </div>
                 @endforeach
-
-                {{-- <a href="#"
-                class="text-center bg-gradient-to-tr md:hidden from-custom-green to-custom-blue items-center justify-center flex text-white font-semibold px-5 py-2  rounded-lg"
-                type="button">Lihat Dokter
-                Lainnya</a> --}}
             </div>
         </div>
 
@@ -337,47 +325,16 @@
 
 </x-layout>
 
-
 <script>
-    function setSelectedSpecialist(spesialis) {
-        document.getElementById('dropdownDelayButton').textContent = 'Spesialis ' + spesialis;
-        updateDokterList(spesialis);
+    // Fungsi untuk mengatur nilai spesialisasi
+    function setSpecialization(value) {
+        document.getElementById('specializationInput').value = value;
+        document.getElementById('dropdownDelayButton').innerText = value || 'Pilih Spesialis';
     }
 
-    function setSelectedDay(day) {
-        document.getElementById('pilihhari').textContent = day;
-        // document.getElementById('selected_day').value = day;
-    }
-
-    // Ambil data dari Blade Template
-    const jadwalDokter = @json($jadwalDokter);
-
-
-    // Fungsi untuk memperbarui daftar dokter
-    function updateDokterList(spesialis) {
-        const dokterListContainer = document.getElementById('dokterList');
-
-        // Kosongkan daftar dokter sebelumnya
-        dokterListContainer.innerHTML = '';
-
-        // Filter dokter berdasarkan spesialis
-        const filteredDokter = jadwalDokter.filter(dokter => dokter.spesialis === spesialis);
-
-        // Tambahkan dokter baru ke dalam daftar
-        filteredDokter.forEach(dokter => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-            <p class="block text-white px-4 py-2 hover:bg-custom-blue" onclick="setSelectedDokter('${dokter.nama}')">
-                ${dokter.nama}
-            </p>
-        `;
-            dokterListContainer.appendChild(li);
-        });
-    }
-
-    // Fungsi untuk mengatur dokter yang dipilih
-    function setSelectedDokter(dokter) {
-        // Ubah teks tombol dropdown dokter
-        document.getElementById('dropdownDokterButton').textContent = dokter;
+    // Fungsi untuk mengatur nilai hari
+    function setDay(value) {
+        document.getElementById('dayInput').value = value;
+        document.getElementById('pilihhari').innerText = value || 'Pilih Hari';
     }
 </script>

@@ -1,10 +1,9 @@
 <x-layout>
     <div class="flex flex-col w-full h-full items-center justify-center mb-28 gap-y-10 -mt-4">
+        <!-- Breadcrumb dan Header -->
         <div class="flex flex-col items-center justify-center bg-cover bg-no-repeat w-full h-[450px] relative"
             style="background-image: url(../assets/promise.jpg)">
-            <!-- Overlay -->
             <div class="absolute inset-0 bg-black opacity-50 z-10"></div>
-            <!-- Breadcrumb dan Konten -->
             <div class="relative z-20 flex flex-col items-center">
                 <nav class="flex rounded-xl" aria-label="Breadcrumb">
                     <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
@@ -35,6 +34,8 @@
                 <h1 class="text-2xl font-bold text-custom-green mt-4">Buat Janji</h1>
             </div>
         </div>
+
+        <!-- Form Buat Janji -->
         <div class="flex flex-col w-full h-full items-center justify-center">
             <div class="flex flex-col w-[90%] h-auto pb-10 border rounded-lg bg-white shadow-lg">
                 <div class="flex flex-col items-center mt-4 justify-center my-4 text-center gap-y-4">
@@ -43,45 +44,60 @@
                     </p>
                 </div>
                 <div class="flex flex-col px-8">
-                    <form action="" class="flex flex-col">
+                    @if (session('error'))
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
+                            role="alert">
+                            <span class="block sm:inline">{{ session('error') }}</span>
+                        </div>
+                    @endif
+                    <form action="{{ route('appointment.store') }}" method="POST" class="flex flex-col">
+                        @csrf
+                        <!-- Input Nama -->
                         <div class="mb-6">
-                            <label for="Nama"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama
-                            </label>
-                            <input type="text" id="nama"
+                            <label for="nama"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama</label>
+                            <input type="text" id="nama" name="nama"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Masukan nama" required />
                         </div>
+
+                        <!-- Input Nomor HP -->
                         <div class="mb-6">
                             <label for="nomor_hp"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nomor Hp </label>
-                            <input type="text" id="nomor_hp"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nomor HP</label>
+                            <input type="text" id="nomor_hp" name="nomor_hp"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Masukan nomor hp" required />
                         </div>
+
+                        <!-- Input Alamat -->
                         <div class="mb-6">
                             <label for="alamat"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat
-                            </label>
-                            <input type="text" id="alamat"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat</label>
+                            <input type="text" id="alamat" name="alamat"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Masukan alamat" required />
                         </div>
+
+                        <!-- Input Dokter (Disabled) -->
                         <div class="mb-6">
                             <label for="dokter"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Dokter</label>
-                            <input type="text" id="dokter"
+                            <input type="text" id="dokter" name="dokter"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 opacity-50 cursor-not-allowed"
-                                value="{{ $dokter }}" disabled required />
-                        </div>
-                        <div class="mb-6">
-                            <label for="Spesialis"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Spesialis</label>
-                            <input type="text" id="Spesialis"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 opacity-50 cursor-not-allowed"
-                                placeholder="{{ $spesialis }}" disabled required />
+                                value="{{ $dokter }}" readonly required />
                         </div>
 
+                        <!-- Input Spesialis (Disabled) -->
+                        <div class="mb-6">
+                            <label for="spesialis"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Spesialis</label>
+                            <input type="text" id="spesialis" name="spesialis"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 opacity-50 cursor-not-allowed"
+                                value="{{ $spesialis }}" readonly required />
+                        </div>
+
+                        <!-- Input Hari -->
                         <div class="flex flex-col gap-y-2 mb-6">
                             <p class="text-slate-700 text-base">Pilih hari</p>
                             <button id="pilihhari" data-dropdown-toggle="pilihHari" data-dropdown-delay="500"
@@ -99,111 +115,36 @@
                                     @php
                                         $days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
                                     @endphp
-                                    @foreach ($days as $day)
+                                    @foreach ($days as $dayOption)
                                         <li>
-                                            <p class="block text-white px-4 py-2 hover:bg-custom-blue" id="selectedDay"
-                                                onclick="setSelectedDay('{{ $day }}')">
-                                                {{ $day }}</p>
+                                            <p class="block text-white px-4 py-2 hover:bg-custom-blue cursor-pointer"
+                                                onclick="setSelectedDay('{{ $dayOption }}')">
+                                                {{ $dayOption }}
+                                            </p>
                                         </li>
                                     @endforeach
                                 </ul>
                             </div>
                         </div>
+                        <input type="hidden" id="hari" name="hari" value="{{ $selected_day ?? 'Senin' }}"
+                            required />
 
-                        {{-- <div class="mb-6">
-                            <label for="Spesialis"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Spesialis</label>
-                            <input type="text" id="Spesialis"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 opacity-50 cursor-not-allowed"
-                                placeholder="{{ $hari }}" disabled required />
-                        </div> --}}
-
-                        {{-- <div class="flex flex-col gap-y-2 mb-6">
-                            <p class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih dokter</p>
-                            <button id="dropdownDelayButton" data-dropdown-toggle="pilih_dokter"
-                                data-dropdown-delay="500" data-dropdown-trigger="hover"
-                                class="text-slate-600 w-full bg-white border border-gray-300 hover:bg-custom-green focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg hover:text-white text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 relative"
-                                type="button">Pilih Dokter<svg class="w-2.5 h-2.5 absolute right-2 " aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m1 1 4 4 4-4" />
-                                </svg>
-                            </button>
-                            <div id="pilih_dokter"
-                                class="z-10 hidden bg-custom-green text-white divide-y divide-gray-100 rounded-lg shadow md:w-[85%] w-[80%] dark:bg-custom-blue h-32 overflow-y-scroll">
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                    aria-labelledby="dropdownDelayButton">
-                                    <li>
-                                        <a href="#"
-                                            class="block text-white px-4 py-2 hover:bg-custom-blue">Dashboard</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            class="block px-4 py-2 hover:bg-custom-blue text-white">Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            class="block px-4 py-2 hover:bg-custom-blue text-white">Earnings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="block px-4 py-2 hover:bg-custom-blue text-white">Sign
-                                            out</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="flex flex-col gap-y-2 mb-6">
-                            <p class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Hari</p>
-                            <button id="dropdownDelayButton" data-dropdown-toggle="pilih_hari" data-dropdown-delay="500"
-                                data-dropdown-trigger="hover"
-                                class="text-slate-600 w-full bg-white border border-gray-300 hover:bg-custom-green focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg hover:text-white text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 relative"
-                                type="button">Pilih Spesialis<svg class="w-2.5 h-2.5 absolute right-2 "
-                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 10 6">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m1 1 4 4 4-4" />
-                                </svg>
-                            </button>
-                            <div id="pilih_hari"
-                                class="z-10 hidden bg-custom-green text-white divide-y divide-gray-100 rounded-lg shadow md:w-[85%] w-[80%] dark:bg-custom-blue h-32 overflow-y-scroll">
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                    aria-labelledby="dropdownDelayButton">
-                                    <li>
-                                        <a href="#"
-                                            class="block text-white px-4 py-2 hover:bg-custom-blue">Dashboard</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            class="block px-4 py-2 hover:bg-custom-blue text-white">Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"
-                                            class="block px-4 py-2 hover:bg-custom-blue text-white">Earnings</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="block px-4 py-2 hover:bg-custom-blue text-white">Sign
-                                            out</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div> --}}
-
-                        <a href="https://wa.me/+6285881298808?text=Selamat siang admin, saya ingin membuat janji dengan dokter <?= $dokter ?> pada hari <?= $day ?>"
-                            type="submit"
-                            class="text-white bg-custom-blue hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm
-                            class=text-white
-                            bg-custom-blue hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300
-                            font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</a>
+                        <!-- Tombol Submit -->
+                        <button type="submit"
+                            class="text-white bg-custom-blue hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
                     </form>
                 </div>
             </div>
         </div>
-
     </div>
 </x-layout>
 
 <script>
     function setSelectedDay(day) {
+        // Update teks tombol dropdown
         document.getElementById('pilihhari').textContent = day;
+
+        // Update nilai input tersembunyi
+        document.getElementById('hari').value = day;
     }
 </script>
