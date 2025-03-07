@@ -16,7 +16,7 @@
         <main class="flex flex-col w-full h-full">
             {{ $slot }}
         </main>
-        <x-footer></x-footer>
+        <x-footer :informationRs="$informationRs"></x-footer> <!-- Teruskan data ke footer -->
     </div>
 </body>
 

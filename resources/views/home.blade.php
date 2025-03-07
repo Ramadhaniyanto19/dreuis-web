@@ -56,13 +56,22 @@
             <div class="flex flex-col w-[90%] md:w-1/2 h-auto pb-10 border rounded-lg bg-white shadow-lg">
                 <div class="flex flex-col items-center mt-4 justify-center my-4 text-center gap-y-4">
                     <h2 class="text-3xl font-bold text-custom-blue">Cari Jadwal Dokter</h2>
-                    <p class="text-sm text-custom-green w-80">Temukan jadwal dokter yang sesuai dengan kebutuhan Anda.
-                        Klik
-                        tombol "Cari" untuk melihat daftar dokter yang tersedia. <span class="text-slate-400"> *Untuk
-                            jadwal
-                            dokter dapat berubah-ubah
-                            silakan hubungi kontak
-                            berikut 628938383838.</span></p>
+                    @if ($informationRs->isNotEmpty())
+                        @php
+                            $whatsappNumber = $informationRs->first()->no_wa; // Ambil nomor WhatsApp dari data pertama
+                        @endphp
+                        <p class="text-sm text-custom-green w-80">Temukan jadwal dokter yang sesuai dengan kebutuhan
+                            Anda.
+                            Klik
+                            tombol "Cari" untuk melihat daftar dokter yang tersedia. <span class="text-slate-400">
+                                *Untuk
+                                jadwal
+                                dokter dapat berubah-ubah
+                                silakan hubungi kontak
+                                berikut {{ $whatsappNumber }}.</span></p>
+                    @else
+                        <p class="text-red-500">-</p>
+                    @endif
                 </div>
                 <div class="flex flex-col pl-4">
                     <form action="{{ route('home') }}" method="GET" class="gap-y-2 flex flex-col">
@@ -238,13 +247,21 @@
                                     <!-- Modal footer -->
                                     <div
                                         class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                        <a href="https://wa.me/6281234567890?text=Haii%20kaka%20admin,%20saya%20mau%20menanyakan%20perihal%20{{ urlencode($promo->name) }},%20apakah%20masih%20berlaku%20dan%20tersedia%20kuotanya%20hingga%20saat%20ini?"
-                                            target="_blank">
-                                            <button data-modal-hide="static-modal-{{ $promo->id }}" type="button"
-                                                class="text-white w-full bg-gradient-to-tr from-custom-green to-custom-blue hover:bg-custom-green focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-32 md:px-64 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                                Dapatkan Promo
-                                            </button>
-                                        </a>
+                                        @if ($informationRs->isNotEmpty())
+                                            @php
+                                                $whatsappNumber = $informationRs->first()->no_wa; // Ambil nomor WhatsApp dari data pertama
+                                            @endphp
+                                            <a href="https://wa.me/{{ $whatsappNumber }}?text=Haii%20kaka%20admin,%20saya%20mau%20menanyakan%20perihal%20{{ urlencode($promo->promoName) }},%20apakah%20masih%20berlaku%20dan%20tersedia%20kuotanya%20hingga%20saat%20ini?"
+                                                target="_blank">
+                                                <button data-modal-hide="static-modal-{{ $promo->id }}"
+                                                    type="button"
+                                                    class="text-white w-full bg-gradient-to-tr from-custom-green to-custom-blue hover:bg-custom-green focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-32 md:px-64 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                                    Dapatkan Promo
+                                                </button>
+                                            </a>
+                                        @else
+                                            <p class="text-red-500">-</p>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

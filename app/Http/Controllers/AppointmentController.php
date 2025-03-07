@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Appointment;
+use App\Models\InformationRs;
 use Illuminate\Support\Facades\Log;
 
 class AppointmentController extends Controller
@@ -35,9 +36,17 @@ class AppointmentController extends Controller
             $appointment = Appointment::create($validated);
             Log::info('Data berhasil disimpan:', $appointment->toArray()); // Log data yang disimpan
 
-            // Jika berhasil, buat URL WhatsApp
+            // Ambil nomor WhatsApp dari tabel information_rs (data terbaru)
+            $whatsappNumber = InformationRs::latest()->take(1)->value('no_wa');
+
+            // Jika nomor WhatsApp tidak ditemukan, gunakan nomor default
+            if (!$whatsappNumber) {
+                $whatsappNumber = '6285881298808'; // Nomor default
+                Log::warning('Nomor WhatsApp tidak ditemukan, menggunakan nomor default.');
+            }
+
+            // Buat pesan WhatsApp
             $whatsappMessage = "Halo, saya ingin membuat janji dengan dokter {$validated['dokter']} pada hari {$validated['hari']}. Nama saya: {$validated['nama']}";
-            $whatsappNumber = "6285881298808"; // Ganti dengan nomor WhatsApp tujuan
             $whatsappUrl = "https://wa.me/$whatsappNumber?text=" . urlencode($whatsappMessage);
 
             Log::info('Redirecting to WhatsApp URL:', ['url' => $whatsappUrl]); // Log URL WhatsApp

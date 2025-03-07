@@ -1,7 +1,21 @@
-<a href="https://wa.me/628938383838?text=Selamat siang admin, saya ingin bertanya mengenai RS DR EUIS"
-    class=" right-1 bottom-28 w-16 h-16 rounded-full z-40 fixed">
-    <x-ri-whatsapp-fill class="text-green-400" />
-</a>
+@props(['informationRs']) <!-- Terima data sebagai prop -->
+
+@foreach ($informationRs as $info)
+    <div class="bg-white z-30 h-auto w-24 py-2">
+
+        <!-- Tombol Google Maps -->
+        <a href="{{ urlencode($info->location) }}"
+            class="right-4 bottom-24 w-12 h-12 rounded-full z-40 fixed flex items-center justify-center">
+            <x-entypo-location class="text-green-400" />
+        </a>
+        <!-- Tombol WhatsApp -->
+        <a href="https://wa.me/{{ $info->no_wa }}?text=Selamat siang admin, saya ingin bertanya mengenai RS DR EUIS"
+            class="right-4 bottom-6 w-12 h-12 rounded-full z-40 fixed">
+            <x-ri-whatsapp-fill class="text-green-400" />
+        </a>
+    </div>
+@endforeach
+
 <footer class="items-center justify-center text-center w-full md:flex hidden h-12 bottom-0 absolute bg-custom-blue">
     <p class="text-base font-bold text-white">Copyright © 2023 RS DR EUIS. | All Rights Reserved</p>
 </footer>

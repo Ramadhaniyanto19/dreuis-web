@@ -11,6 +11,8 @@ use App\Http\Controllers\RiwayatJanjiController;
 use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\InformationRsController;
 
 // Route untuk halaman utama
 // Route::get('/', [JadwalDokterController::class, 'home'])->name('home');
@@ -70,3 +72,18 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Berita
 Route::resource('/dashboard-berita', BeritaController::class)->middleware('auth');
+
+
+// Useerss
+
+// Route::middleware('auth')->group(function () {
+//     Route::resource('/dashboard-users', UserController::class)->except(['show', 'edit', 'update']);
+// });
+
+Route::middleware('auth')->group(function () {
+    Route::resource('/dashboard-users', UserController::class)->except(['show']);
+});
+
+
+
+Route::resource('/dashboard-information-rs', InformationRsController::class)->middleware('auth');

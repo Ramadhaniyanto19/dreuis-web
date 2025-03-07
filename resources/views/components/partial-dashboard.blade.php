@@ -43,7 +43,7 @@
                                 </p>
                             </div>
                             <ul class="py-1" role="none">
-                                <li>
+                                {{-- <li>
                                     <a href="/dashboard"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem">Dashboard</a>
@@ -52,7 +52,7 @@
                                     <a href="/dashboard-dokter"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                         role="menuitem">List Dokter</a>
-                                </li>
+                                </li> --}}
                                 <li>
                                     {{-- <a href="{{ route('logout') }}"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -153,6 +153,20 @@
                                 d="M5 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm0 4a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm0 4a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" />
                         </svg>
                         <span class="flex-1 ms-3 whitespace-nowrap">Daftar Berita</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/dashboard-users"
+                        class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                            aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                            viewBox="0 0 20 18">
+                            <path
+                                d="M14 2a3.963 3.963 0 0 0-1.4.267 6.007 6.007 0 0 1-1.933 2.614 3.993 3.993 0 0 0-.933-1.183A3.963 3.963 0 0 0 10 2H6a3.963 3.963 0 0 0-1.4.267 6.007 6.007 0 0 1-1.933 2.614 3.993 3.993 0 0 0-.933 1.183A3.963 3.963 0 0 0 2 6v6a3.963 3.963 0 0 0 1.4.267 6.007 6.007 0 0 1 1.933 2.614 3.993 3.993 0 0 0 .933 1.183A3.963 3.963 0 0 0 6 16h4a3.963 3.963 0 0 0 1.4-.267 6.007 6.007 0 0 1 1.933-2.614 3.993 3.993 0 0 0 .933-1.183A3.963 3.963 0 0 0 14 12V2Z" />
+                            <path
+                                d="M6 5a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm4 0a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm2 7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-1a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1Z" />
+                        </svg>
+                        <span class="flex-1 ms-3 whitespace-nowrap">Daftar User</span>
                     </a>
                 </li>
 
