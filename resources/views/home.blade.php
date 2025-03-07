@@ -302,50 +302,56 @@
             </div>
         </div>
 
+        {{-- Berita --}}
         <div class="flex flex-col w-full h-auto justify-center items-center gap-y-4">
             <div class="flex md:flex-col justify-between md:justify-center items-center w-full px-8">
                 <h1 class="text-custom-blue md:text-center text-xl font-bold md:text-2xl">Berita Terkini</h1>
                 <div class="w-44 h-0.5 bg-gradient-to-l from-custom-blue to-custom-green md:block hidden"></div>
                 <div class="flex flex-col md:hidden">
-                    <a href="#"
-                        class="text-center text-custom-green items-center justify-center flex  font-semibold rounded-lg text-sm"
+                    <a href="/berita"
+                        class="text-center text-custom-green items-center justify-center flex font-semibold rounded-lg text-sm"
                         type="button">Lihat Lainnya</a>
                     <div class="w-20 h-0.5 bg-gradient-to-l from-custom-blue to-custom-green"></div>
                 </div>
             </div>
             <div class="flex w-full overflow-x-auto">
                 <div
-                    class="grid md:flex gap-8 px-4 md:overflow-x-auto  [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-0.5
-                        pb-10
-                        [&::-webkit-scrollbar-track]:bg-gray-100
-                        [&::-webkit-scrollbar-thumb]:bg-gray-300
-                        dark:[&::-webkit-scrollbar-track]:bg-neutral-700
-                        dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
-                    <!-- Artikel 1 -->
-                    <div class="flex-shrink-0 w-full md:w-[300px] h-auto rounded-xl bg-white shadow-xl border p-4">
-                        <img src="../assets/berita1.jpg" alt="Thumbnail Artikel"
-                            class="w-full h-48 object-cover rounded-t-xl mb-4">
-                        <h3 class="text-lg font-semibold text-custom-blue">Pelayanan Kesehatan Adalah Dukungan
-                            Pemeliharaan Kesehatan</h3>
-                        <p class="text-sm text-gray-600 mt-2">
-                            Pelayanan kesehatan adalah setiap upaya untuk memelihara dan meningkatkan kesehatan serta
-                            mencegah dan menyembuhkan penyakit masyarakat.
+                    class="grid md:flex gap-8 px-4 md:overflow-x-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-0.5 pb-10 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
+                    @foreach ($beritas as $berita)
+                        <div class="flex-shrink-0 w-full md:w-[300px] h-auto rounded-xl bg-white shadow-xl border p-4">
+                            <!-- Thumbnail Berita -->
+                            @if ($berita->gambar)
+                                <img src="{{ asset('storage/' . $berita->gambar) }}" alt="Thumbnail Berita"
+                                    class="w-full h-48 object-cover rounded-t-xl mb-4">
+                            @else
+                                <img src="../assets/berita1.jpg" alt="Thumbnail Berita"
+                                    class="w-full h-48 object-cover rounded-t-xl mb-4">
+                            @endif
 
-                        </p>
-                        <div class="flex mt-4">
-                            <a href="/berita"
-                                class="flex items-center text-custom-green font-semibold hover:underline justify-center gap-x-2">
-                                <span>Baca Selengkapnya</span>
-                                <x-bi-arrow-right-circle-fill />
-                            </a>
+                            <!-- Judul Berita -->
+                            <h3 class="text-lg font-semibold text-custom-blue">{{ $berita->judul }}</h3>
+
+                            <!-- Isi Berita (Dipotong untuk tampilan singkat) -->
+                            <p class="text-sm text-gray-600 mt-2">
+                                {{ Str::limit(strip_tags($berita->isi), 100) }}
+                                <!-- Batasi teks maksimal 100 karakter dan hapus tag HTML -->
+                            </p>
+
+                            <!-- Tombol Baca Selengkapnya -->
+                            <div class="flex mt-4">
+                                <a href="{{ route('detail-berita', $berita->id) }}" {{-- <a href="#" --}}
+                                    class="flex items-center text-custom-green font-semibold hover:underline justify-center gap-x-2">
+                                    <span>Baca Selengkapnya</span>
+                                    <x-bi-arrow-right-circle-fill />
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             <a href="/berita"
-                class="hidden text-center bg-gradient-to-tr from-custom-green to-custom-blue items-center justify-center md:flex text-white font-semibold px-5 py-2  rounded-lg"
-                type="button">Lihat Berita
-                Lainnya</a>
+                class="hidden text-center bg-gradient-to-tr from-custom-green to-custom-blue items-center justify-center md:flex text-white font-semibold px-5 py-2 rounded-lg"
+                type="button">Lihat Berita Lainnya</a>
         </div>
     </div>
 

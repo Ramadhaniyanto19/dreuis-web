@@ -1,4 +1,4 @@
-<x-layout>
+{{-- <x-layout>
     <div class="flex flex-col w-full h-full items-center px-8 bg-sky-400 shadow-xl justify-center pb-20 gap-y-10">
         <div class="flex flex-col w-full h-full pt-10">
             <div class="flex flex-col w-full h-full">
@@ -27,6 +27,40 @@
                         <a href="/berita" class="text-center items-center flex hover:text-custom-blue font-semibold flex-row">
                             <x-fas-search class="w-6 h-6 font-bold text-custom-green "/>
                             <span class="text-base font-bold text-custom-green">Cari berita lainnya</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-layout> --}}
+
+
+<x-layout>
+    <div class="flex flex-col w-full h-full items-center px-2 md:px-8 bg-sky-400 shadow-xl justify-center pb-20">
+        <div class="flex flex-col w-full h-auto mt-0 md:pt-10">
+            <div class="flex flex-col w-full h-full">
+                <!-- Gambar Berita -->
+                <img src="{{ asset('storage/' . $berita->gambar) }}" alt="{{ $berita->judul }}"
+                    class="w-full h-80 md:h-[500px] rounded-t-lg">
+
+                <!-- Konten Berita -->
+                <div class="flex flex-col bg-white h-full w-full px-4 md:px-14 gap-y-2 pb-16">
+                    <h1 class="text-2xl md:text-5xl font-bold text-custom-blue mt-4">{{ $berita->judul }}</h1>
+                    <p class="text-sm text-slate-600 font-semibold">by {{ $berita->penulis }}</p>
+                    <p class="text-sm text-slate-600 font-semibold">
+                        Dipublikasikan pada: {{ $berita->created_at->translatedFormat('l, j F Y H:i') }}
+                    </p>
+                    <div class="whitespace-pre-line w-full text-base">
+                        {{ strip_tags($berita->isi) }}
+                    </div>
+
+                    <!-- Tombol Kembali ke Berita -->
+                    <div class="flex flex-row items-center justify-center text-center gap-x-2 mt-10">
+                        <a href="/berita"
+                            class="text-center items-center flex hover:text-custom-blue font-semibold flex-row">
+                            <x-fas-search class="w-6 h-6 font-bold text-custom-green" />
+                            <span class="text-base font-bold text-custom-green">Kembali ke Berita</span>
                         </a>
                     </div>
                 </div>

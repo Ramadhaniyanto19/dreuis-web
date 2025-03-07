@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Berita;
 use Illuminate\Http\Request;
 use App\Models\Doctor;
 use App\Models\DoctorSchedule;
@@ -17,6 +18,7 @@ class HomeController extends Controller
 
         // promo
         $promos = Promo::latest()->take(4)->get();
+        $beritas = Berita::latest()->take(4)->get();
 
         // Ambil data dokter dengan relasi jadwalnya
         $query = Doctor::with('schedules');
@@ -37,6 +39,6 @@ class HomeController extends Controller
         $days = DoctorSchedule::select('day')->distinct()->pluck('day');
 
         // Kirim data ke view
-        return view('home', compact('carousels', 'doctors', 'specializations', 'days', 'promos'));
+        return view('home', compact('carousels', 'doctors', 'specializations', 'days', 'promos', 'beritas'));
     }
 }

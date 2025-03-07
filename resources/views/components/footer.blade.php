@@ -33,7 +33,7 @@
 
         <!-- Konten 3 -->
         <div class="flex flex-col items-center justify-center ">
-            <a href="/buat-janji" class="text-center items-center flex flex-col">
+            <a href="/berita" class="text-center items-center flex flex-col">
                 <x-vaadin-doctor-briefcase class="w-6 h-6 text-custom-blue" />
                 <p class="text-sm font-semibold text-custom-blue">Berita</p>
             </a>

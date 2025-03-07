@@ -10,6 +10,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\RiwayatJanjiController;
 use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\BeritaController;
 
 // Route untuk halaman utama
 // Route::get('/', [JadwalDokterController::class, 'home'])->name('home');
@@ -35,12 +36,15 @@ Route::get('/dashboard-riwayat-janji/export', [RiwayatJanjiController::class, 'e
 
 // Route untuk promo dan berita
 Route::get('/promo', [PromoController::class, 'indexPromo'])->name('promo');
-Route::get('/berita', function () {
-    return view('berita');
-});
-Route::get('/detail-berita', function () {
-    return view('detail_berita');
-});
+// Route::get('/berita', function () {
+//     return view('berita');
+// });
+Route::get('/berita', [BeritaController::class]);
+// routes/web.php
+Route::get('/detail-berita/{id}', [BeritaController::class, 'detailBerita'])->name('detail-berita');
+// Route::get('/detail-berita', function () {
+//     return view('detail_berita');
+// });
 
 // Route untuk dashboard
 Route::get('/dashboard', function () {
@@ -63,3 +67,6 @@ Route::resource('dashboard-carousel', CarouselController::class)->middleware('au
 
 // routes/web.php
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Berita
+Route::resource('/dashboard-berita', BeritaController::class)->middleware('auth');
